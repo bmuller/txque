@@ -7,4 +7,4 @@ install:
 
 apidocs:
 	rm -rf docs/source
-	sphinx-apidoc -o docs/source coinbits coinbits/**/tests coinbits/tests
+	sphinx-apidoc -o docs/source txque txque/**
