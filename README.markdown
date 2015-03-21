@@ -28,7 +28,6 @@ class MyBackgroundJob(Job):
 Then, you can queue a job anywhere you need to:
 
 ```python
-import sys
 from twisted.internet import reactor
 from txque.dispatchers.sql import MySQLDispatcher
 
@@ -43,7 +42,7 @@ d.addCallback(lambda _: reactor.stop())
 reactor.run()
 ```
 
-Then, you can run as many workers as you'd like.  A sample worker application has been included:
+Then, you can run as many workers as you'd like.  A sample worker application has been included in the examples folder (you'll want to edit it first before use to set your database config options).  Running it is simple:
 
 ```bash
 twistd -noy worker.tac

@@ -19,6 +19,6 @@ application = service.Application("txque worker")
 quename = environ.get('TXQUE_QUENAME', 'default')
 priority = environ.get('TXQUE_PRIORITY', 0)
 
-dispatcher = MySQLDispatcher(user="root", passwd="", db="txque")
+dispatcher = MySQLDispatcher(user="username", passwd="password", db="txque")
 service = Worker(dispatcher, queue=quename, priority=priority)
 service.setServiceParent(application)
