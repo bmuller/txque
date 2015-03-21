@@ -78,3 +78,8 @@ class SQLDispatcher(object):
             dbjob.error = "Issue running %s: %s" % (job, error)
             return dbjob.save()
         return TxqueJob.find(job.dbid).addCallback(setError)
+
+
+class MySQLDispatcher(SQLDispatcher):
+    def __init__(self, **kwargs):
+        super(MySQLDispatcher, self).__init__('MySQLdb', **kwargs)

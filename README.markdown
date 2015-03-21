@@ -1,4 +1,4 @@
-# txque: a Python library for running asynchronous jobs using Twisted.
+# txque: Python Async Background Jobs
 
 This project allows you to run background jobs asynchronously much like Ruby's [Sidekiq](http://sidekiq.org/).  It uses [Python Twisted](http://twistedmatrix.com) to handle thread pooling and all of the magic behind the scenes.
 

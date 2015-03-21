@@ -6,23 +6,33 @@ from inspect import getmodule
 from twisted.internet import reactor, defer
 from twisted.python import log
 from twisted.python.reflect import getClass
+from twisted.application import service
 
 
-class Worker(object):
+class Worker(service.Service):
     _callID = None
     delay = 0.1
     maxDelay = 5
     maxJobs = 20
 
 
-    def __init__(self, dispatcher, queue='default', priority=0, autostart=True):
+    def __init__(self, dispatcher, queue='default', priority=0):
         self.priority = priority
         self.queueName = queue
         self.dispatcher = dispatcher
         self.id = "%i:%i" % (uuid.getnode(), os.getpid())
-        if autostart:
-            log.msg("Starting worker %s" % self.id)
-            reactor.callWhenRunning(self.run)
+        self.running = False
+
+    def startService(self):
+        log.msg("Starting worker %s" % self.id)
+        self.running = True
+        self.run()
+
+    def stopService(self):
+        self.running = False
+        if self._callID and not self._callID.called:
+            self._callID.cancel()
+            self._callID = None
 
     def run(self):
         log.msg("Requesting jobs.")
@@ -55,10 +65,10 @@ class Worker(object):
             self._callID.cancel()
             self._callID = None
 
-        if runnow:
+        if runnow and self.running:
             self.delay = 0.1
             self.run()
-        else:
+        elif self.running:
             self.delay = min(self.delay * 2.7, self.maxDelay)
             self._callID = reactor.callLater(self.delay, self.run)
 
