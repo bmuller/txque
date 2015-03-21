@@ -21,9 +21,8 @@ from txque.work import Job
 
 class MyBackgroundJob(Job):
     def run(self, anArgument, akeyword=avalue):
-        # Now do some work.  This work can be synchronous, or it can
-	# return a deferred.
-	someExpensiveFunction(anArgument, akeyword)
+        # Now do some work.  This work can be synchronous, or it can return a deferred.
+        someExpensiveFunction(anArgument, akeyword)
 ```
 
 Then, you can queue a job anywhere you need to:
